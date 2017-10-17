@@ -22,7 +22,7 @@ public class Torneo {
 		this.listaQuartifinale = partite;
 		this.calendario = partite;
 	}
-	public void semiFinale(ArrayList <Partita> partite) {
+	public void semiFinale() {
 		this.listaSemifinale = partite;
 		calendario.addAll(partite);
 	}
