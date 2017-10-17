@@ -6,6 +6,9 @@ public class Partita {
 	private Date data;
 	private int gol1;
 	private int gol2;
+	private Squadra vincitrice;
+	private Squadra perdente;
+	
 	
 	public Partita(Squadra squadra1, Squadra squadra2, Date d) {
 		this.squadra1 = squadra1;
@@ -22,10 +25,28 @@ public class Partita {
 	public Date getData(){
 		return data;
 	}
+	public void setData(Date data){
+		this.data = data;
+	}
 	public void setRisultato(int gol1, int gol2) {
 		this.gol1 = gol1;
 		this.gol2 = gol2;
+		if(gol1>gol2) {
+			vincitrice = this.squadra1;
+			perdente = this.squadra2;
+		}
+		else {
+			vincitrice = this.squadra2;
+			perdente = this.squadra1;
+		}
 	}
+	public Squadra getVincitrice() {
+		return this.vincitrice;
+	}
+	public Squadra getPerdente() {
+		return this.perdente;
+	}
+	
 	public int getGol1() {
 		return this.gol1;
 	}
