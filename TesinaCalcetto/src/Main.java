@@ -7,8 +7,7 @@ public class Main {
         ArrayList<Partita> partite = new ArrayList<>();
         ArrayList<Partita> fine = new ArrayList<>();
         String[] premi;
-        boolean gold = false;
-        for(int i=0;i<8;i++){ //8 perchè parto dai quarti di finale
+        for(int i=0;i<8;i++){ //8 perchè parto dai quarti di finale  
             String nome = "Squadra"+(i+1);
             String citta = "Citta"+(i+1);
             Squadra s = new Squadra(nome,citta);
@@ -27,8 +26,9 @@ public class Main {
                 partite.add(new Partita(squadre.get(i-1),squadre.get(i)));
             }
         }
-        Torneo torneo = new Torneo(partite,gold);
-        fine=svolgiTorneo(partite,torneo);
+        Torneo torneo = new Torneo(partite);
+        TorneoGold torneoGold = new TorneoGold(partite);
+        fine=svolgiTorneo(new QuartiDiFinale(partite),torneo);
         premi=torneo.getPremi();
         System.out.println("Ha vinto il torneo la squadra "+fine.get(0).getVincitrice().getNome()+" e ha vinto il "+premi[0]+".\nLa seconda classificata è la squadra "+fine.get(0).getPerdente().getNome()+" e ha vinto il "+premi[1]+".\nLa terza classificata è la squadra "+fine.get(1).getVincitrice().getNome()+" e ha vinto "+premi[2]);
     }
@@ -60,27 +60,19 @@ public class Main {
         return listaRisultati;
     }
     
-    public static ArrayList<Partita> svolgiTorneo(ArrayList<Partita> p, Torneo t){
+    public static ArrayList<Partita> svolgiTorneo(StratiTorneo s, Torneo t){
         ArrayList<int[]> risultati = new ArrayList<>();
-        ArrayList<int[]> risultati1 = new ArrayList<>();
         ArrayList<Partita> prossimoGirone = new ArrayList<>();
-        ArrayList<Partita> prossimoGirone1 = new ArrayList<>();
-        switch(p.size()){
-            case 4:
-                
-                risultati=generaRisultati(p.size());
-                prossimoGirone.addAll(t.disputaPartite(risultati,0));
-                svolgiTorneo(prossimoGirone,t);
+        switch(s.getGirone().size()){
+            case 4:         
+                risultati=generaRisultati(s.getGirone().size());
+                svolgiTorneo(new Semifinale(t.disputaPartite(risultati, s)),t);
             case 2:
-                risultati=generaRisultati(p.size());
-                prossimoGirone.addAll(t.disputaPartite(risultati,0));
-                svolgiTorneo(prossimoGirone,t);
+            	  risultati=generaRisultati(s.getGirone().size());
+                  svolgiTorneo(new Finale(t.disputaPartite(risultati, s)),t);
             case 1:
-                risultati=generaRisultati(p.size());
-                prossimoGirone.addAll(t.disputaPartite(risultati,0));
-                risultati1=generaRisultati(p.size());
-                prossimoGirone1.addAll(t.disputaPartite(risultati1,1));
-                prossimoGirone.addAll(prossimoGirone1);
+            	 risultati=generaRisultati(s.getGirone().size());
+                 prossimoGirone.addAll(t.disputaPartite(risultati, s));
                 return prossimoGirone;
             default: break;
         }

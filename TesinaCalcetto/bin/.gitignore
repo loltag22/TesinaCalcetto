@@ -1,6 +1,5 @@
-/Giocatore.class
-/Main.class
-/Partita.class
-/SchedaGiocatore.class
-/Squadra.class
-/Torneo.class
+/StratiTorneo.class
+/TorneoGold.class
+/QuartiDiFinale.class
+/Semifinale.class
+/Finale.class
